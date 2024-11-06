@@ -14,7 +14,9 @@ class Match < ApplicationRecord
     return 0 if finished?
 
     elapsed = Time.current - started_at
-    [duration - elapsed.to_i, 0].max
+    remaining = duration - elapsed.to_i
+
+    remaining.positive? ? remaining : 0
   end
 
   private

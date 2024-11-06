@@ -1,0 +1,89 @@
+<div id="match_<%= match.id %>"
+     data-controller="timer"
+     data-timer-match-id="<%= match.id %>"
+     data-timer-status="<%= match.status %>">
+
+  <div class="text-center mb-8">
+    <div class="inline-block border-2 border-blue-500 rounded-lg p-4 bg-blue-100">
+      <div data-timer-target="display" class="text-blue-500 text-4xl font-bold">
+        <%= format_time(match.time_remaining) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-12">
+    <!-- Lutador 1 -->
+    <div class="flex-1 border-2 border-blue-500 rounded-lg p-6 bg-blue-50 flex flex-col items-center">
+      <h2 class="text-xl font-bold mb-2"><%= match.fighter1.name %></h2>
+
+      <div class="w-32 h-40 mb-4">
+        <% if match.fighter1.photo.attached? %>
+          <%= image_tag match.fighter1.photo, class: "w-full h-full object-cover rounded-lg shadow-md" %>
+        <% else %>
+          <div class="w-full h-full bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="text-4xl font-bold text-blue-600 mb-4">
+        <%= match.fighter1_score %>
+      </div>
+
+      <% if match.in_progress? %>
+        <div class="flex space-x-2">
+          <%= button_to "+1", add_point_match_path(match, fighter: 1), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600", form_class: "inline-block" %>
+          <%= button_to "Falta", add_penalty_match_path(match, fighter: 1), method: :post, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600", form_class: "inline-block" %>
+        </div>
+      <% end %>
+
+      <div class="mt-2 text-sm text-red-600">
+        Faltas: <%= match.fighter1_penalties %>
+      </div>
+    </div>
+
+    <!-- Lutador 2 -->
+    <div class="flex-1 border-2 border-blue-500 rounded-lg p-6 bg-blue-50 flex flex-col items-center">
+      <h2 class="text-xl font-bold mb-2"><%= match.fighter2.name %></h2>
+
+      <div class="w-32 h-40 mb-4">
+        <% if match.fighter2.photo.attached? %>
+          <%= image_tag match.fighter2.photo, class: "w-full h-full object-cover rounded-lg shadow-md" %>
+        <% else %>
+          <div class="w-full h-full bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
+            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="text-4xl font-bold text-blue-600 mb-4">
+        <%= match.fighter2_score %>
+      </div>
+
+      <% if match.in_progress? %>
+        <div class="flex space-x-2">
+          <%= button_to "+1", add_point_match_path(match, fighter: 2), method: :post, class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600", form_class: "inline-block" %>
+          <%= button_to "Falta", add_penalty_match_path(match, fighter: 2), method: :post, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600", form_class: "inline-block" %>
+        </div>
+      <% end %>
+
+      <div class="mt-2 text-sm text-red-600">
+        Faltas: <%= match.fighter2_penalties %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-8">
+    <% if match.pending? %>
+      <%= button_to "Iniciar Luta", start_match_path(match), method: :post, class: "bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600" %>
+    <% elsif match.in_progress? %>
+      <%= button_to "Finalizar Luta", stop_match_path(match), method: :post, class: "bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600" %>
+    <% else %>
+      <div class="text-xl font-bold text-gray-600">Luta Finalizada</div>
+    <% end %>
+  </div>
+</div>

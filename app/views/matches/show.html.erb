@@ -1,0 +1,5 @@
+<div class="max-w-4xl mx-auto bg-white rounded-lg shadow p-6">
+  <%= render "match", match: @match %>
+</div>
+
+<%= turbo_stream_from "match_#{@match.id}" %>

@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: taekwondo_score_development
+
+test:
+  <<: *default
+  database: taekwondo_score_test
+
+production:
+  <<: *default
+  database: taekwondo_score_production
+  username: taekwondo_score
+  password: <%= ENV["TAEKWONDO_SCORE_DATABASE_PASSWORD"] %>

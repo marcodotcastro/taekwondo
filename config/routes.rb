@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root 'matches#index'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  resources :fighters
+  resources :matches do
+    member do
+      post 'start'
+      post 'stop'
+      post 'reset'
+      post 'add_point'
+      post 'add_penalty'
+    end
+  end
 end

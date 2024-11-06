@@ -2,11 +2,10 @@ class MatchesController < ApplicationController
   before_action :set_match, only: [:show, :start, :stop, :add_point, :add_penalty]
 
   def index
-    @matches = Match.all
+    @matches = Match.all.order(created_at: :desc)
   end
 
   def show
-    @match = Match.find(params[:id])
   end
 
   def new
@@ -16,8 +15,9 @@ class MatchesController < ApplicationController
 
   def create
     @match = Match.new(match_params)
+
     if @match.save
-      redirect_to @match, notice: 'Luta criada com sucesso.'
+      redirect_to @match, notice: 'Luta criada com sucesso!'
     else
       @fighters = Fighter.all
       render :new, status: :unprocessable_entity

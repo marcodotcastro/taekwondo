@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :fighter do
-    name { "MyString" }
-    category { "MyString" }
-    weight { 1 }
-    bio { "MyText" }
+    sequence(:name) { |n| "Fighter #{n}" }
+    category { "Peso Médio" }
+    weight { 75 }
   end
 end

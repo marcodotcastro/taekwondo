@@ -16,11 +16,12 @@ class Match < ApplicationRecord
   def time_remaining
     return duration unless started_at
     return 0 if finished?
+    return duration if started_at > Time.current
 
     elapsed = Time.current - started_at
     remaining = duration - elapsed.to_i
 
-    remaining.positive? ? remaining : 0
+    [remaining, 0].max
   end
 
   private
